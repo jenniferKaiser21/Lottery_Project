@@ -1,11 +1,14 @@
 # Powerball Simulation Project
 Code adapted from original 2020 concept (<a href="https://github.com/jenniferKaiser21/kaiserSampleCode/blob/7b7f8fb000101addadbd58f8124e119712904266/lottery.py">linked here</a>)
-Jennifer Kaiser 2023 
+<p>Jennifer Kaiser 2023 
+<p>
 <a href="www.jenniferkaiser.tech">www.jenniferkaiser.tech</a>
+<p>
 <a href="www.linkedin.com/in/jenniferkaiser-tech">www.linkedin.com/in/jenniferkaiser-tech</a>
+<p>
 <a href="www.github.com/jenniferkaiser21">www.github.com/jenniferkaiser21</a>
 
-# Data Source(s):
+ # Data Source(s):
 <img src="https://github.com/jenniferKaiser21/Lottery_Project/blob/e2c490be9ac10987f6daf616188e22a84ad390a7/images/powerball_chart.jpg">
 Source: <a href="www.powerball.com">www.powerball.com</a>
 
