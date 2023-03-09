@@ -1,4 +1,4 @@
-from random import choices
+import random
 import json
 import http.client
 import sys
@@ -22,37 +22,73 @@ class LottoSimulation:
               [0, 1, "$4"], # PB
               ]
     
-    def __init__(self, ticket_quantity=0):
+    def __init__(self, ticket_quantity=0, ticket_cost=0, customer_tickets = []):
         self.ticket_quantity = ticket_quantity
+        self.ticket_cost = ticket_cost
+        self.customer_tickets = customer_tickets
         
     def purchase_tickets(self):
         """
         Simulates the ticket purchasing process.
         """
-        ticket_cost = 2
-        self.ticket_quantity = int(input(f"Welcome to Powerball! Each quick pick costs ${ticket_cost}. \nHow many tickets would you like to purchase?  "))
+        self.ticket_cost = 2
+        self.ticket_quantity = int(input(f"Welcome to Powerball! Each quick pick costs ${self.ticket_cost}. \nHow many tickets would you like to purchase?  "))
         
-        print(f"That will cost ${self.ticket_quantity * ticket_cost}. Please type how much cash you would like to give, we can make change (dollars only, no coins).  ")
+        print(f"That will cost ${self.ticket_quantity * self.ticket_cost}. Please type how much cash you would like to give, we can make change (dollars only, no coins).  ")
         money_received = int(input("$ "))
         
-        while money_received < self.ticket_quantity * ticket_cost:
+        while money_received < self.ticket_quantity * self.ticket_cost:
             print(f"Sorry, you don't have enough money. How many tickets would you like to buy? ")
             self.ticket_quantity = int(input())
-            print(f"That will cost ${self.ticket_quantity * ticket_cost}. Please type how much cash you would like to give, we can make change (dollars only, no coins).")
+            print(f"That will cost ${self.ticket_quantity * self.ticket_cost}. Please type how much cash you would like to give, we can make change (dollars only, no coins).")
             money_received = int(input("$ "))
         
-        if money_received > self.ticket_quantity * ticket_cost:
-            print(f"Here is your change. ${money_received - (self.ticket_quantity * ticket_cost)}. Best of luck!")
+        if money_received > self.ticket_quantity * self.ticket_cost:
+            print(f"Here is your change. ${money_received - (self.ticket_quantity * self.ticket_cost)}. Best of luck!")
         
-        elif money_received == self.ticket_quantity * ticket_cost:
+        elif money_received == self.ticket_quantity * self.ticket_cost:
             print(f"Thank you. Good luck!")
             
-        return self.ticket_quantity, ticket_cost
+        return self.ticket_quantity, self.ticket_cost
 
-    def playthelotto(ticket_quantity, ticket_cost):
-        #TODO: implement logic here
-        #use ticket_quantity
-        pass
+    def playthelotto(self):
+        #initializes the lists of possible balls
+        white_balls = [x for x in range(1, 70)]
+        power_ball = [x for x in range(1, 27)]
+        winning_white_balls = []
+        winning_power_ball = []
+        white_balls_in_play = white_balls.copy()
+        power_ball_in_play = power_ball.copy()
+        
+        #picking 5  white balls
+        """
+        random.sample(sequence, k)
+        """
+        winning_white_balls = random.sample(white_balls_in_play, 5)
+        
+        #picking powerball
+        winning_power_ball = random.sample(power_ball_in_play, 1)
+        
+        winning_combo = [winning_white_balls[:],winning_power_ball[0]]
+        #test print statements
+        print(white_balls)
+        print(power_ball)
+        print("winning_white_balls", winning_white_balls)
+        print("winning_power_ball", winning_power_ball)
+        print("winning_combo", winning_combo)
+        return white_balls, power_ball, winning_combo
+        
+    def generatetickets(self):
+        #uses ticket_quantity and generates random tickets
+        #TODO: Implement logic here, use random.sample(sequence, k)
+        ticket_quantity = self.ticket_quantity
+        customer_tickets = [[]] * ticket_quantity
+        
+        for i in range(ticket_quantity):
+            #customer_tickets[i].append(#TODO: append in format winning_combo [[2, 59, 25, 41, 63], 12])
+            pass                           
+        
+        
         
         
 
@@ -158,5 +194,8 @@ TEST CODE
 # p1.previous_pb_stats()  # call the previous_pb_stats method
 # p1.future_pb() # call the future_pb method
 
-# p1 = LottoSimulation() # create an instance of the LottoSimulation class
-# p1.purchase_tickets() #b calls the purchase_tickets() method
+p1 = LottoSimulation() # create an instance of the LottoSimulation class
+p1.purchase_tickets() #b calls the purchase_tickets() method
+p1.playthelotto() # calls the playthelotto(), simulating the play
+print(p1.ticket_cost) # checks the assigned ticket_cost 
+print(p1.ticket_quantity) # checks the assigned ticket_quantity
