@@ -9,23 +9,11 @@ from api import api_token
 class LottoSimulation:
     """
     This class' methods simulate the purchasing of tickets and powerball drawing simulation.
-    """
-    #Prizes List: [Number of Matching White Balls, Number of Matching Power Ball, prize] 
-    prizes = [[5, 1, "Grand Prize"], # 5 white balls + PB
-              [5, 0, "$1,000,000"], # 5 white balls
-              [4, 1, "$50,000"], # 4 white balls + PB
-              [4, 0, "$100"], # 4 white balls
-              [3, 1, "$100"], # 3 white balls + PB
-              [3, 0, "$7"], # 3 white balls
-              [2, 1, "$7"], # 2 white balls + PB
-              [1, 1, "$4"], # 1 white ball + PB
-              [0, 1, "$4"], # PB
-              ]
-    
-    def __init__(self, ticket_quantity=0, ticket_cost=0, customer_tickets = []):
+    """    
+    def __init__(self, ticket_quantity=0, ticket_cost=0, generated_tickets = []):
         self.ticket_quantity = ticket_quantity
         self.ticket_cost = ticket_cost
-        self.customer_tickets = customer_tickets
+        self.generated_tickets = generated_tickets
         
     def purchase_tickets(self):
         """
@@ -55,40 +43,149 @@ class LottoSimulation:
         #initializes the lists of possible balls
         white_balls = [x for x in range(1, 70)]
         power_ball = [x for x in range(1, 27)]
-        winning_white_balls = []
-        winning_power_ball = []
-        white_balls_in_play = white_balls.copy()
-        power_ball_in_play = power_ball.copy()
-        
-        #picking 5  white balls
+
         """
+        Selecting random white balls and powerball.
         random.sample(sequence, k)
         """
-        winning_white_balls = random.sample(white_balls_in_play, 5)
+        winning_white_balls = random.sample(white_balls, 5)
+        winning_power_ball = random.sample(power_ball, 1)
+        self.winning_combo = winning_white_balls + winning_power_ball
         
-        #picking powerball
-        winning_power_ball = random.sample(power_ball_in_play, 1)
-        
-        winning_combo = [winning_white_balls[:],winning_power_ball[0]]
         #test print statements
-        print(white_balls)
-        print(power_ball)
-        print("winning_white_balls", winning_white_balls)
-        print("winning_power_ball", winning_power_ball)
-        print("winning_combo", winning_combo)
-        return white_balls, power_ball, winning_combo
+        #print(white_balls)
+        #print(power_ball)
+        #print("winning_white_balls", winning_white_balls)
+        #print("winning_power_ball", winning_power_ball)
+        #print("winning_combo", winning_combo)
+        print("############################################")
+        print("             WINNING DRAWING:               ")
+        print("############################################")
+        print(f"White Balls: {self.winning_combo[:5]}")
+        print(f"Winning Power Ball: {self.winning_combo[5]}")
+        return self.winning_combo
         
     def generatetickets(self):
+        """
+        Simulates the generation of tickets.
+        """
         #uses ticket_quantity and generates random tickets
-        #TODO: Implement logic here, use random.sample(sequence, k)
         ticket_quantity = self.ticket_quantity
-        customer_tickets = [[]] * ticket_quantity
+        self.generated_tickets = []
+        white_balls = [x for x in range(1, 70)]
+        power_ball = [x for x in range(1, 27)]
         
+        #randomly generates x number quickpicks based on ticket_quantity
         for i in range(ticket_quantity):
-            #customer_tickets[i].append(#TODO: append in format winning_combo [[2, 59, 25, 41, 63], 12])
-            pass                           
+            white_ball_picks = random.sample(white_balls, 5)
+            power_ball_pick = random.sample(power_ball, 1)
+            ticket_combo = white_ball_picks + power_ball_pick
+            self.generated_tickets.append(ticket_combo)
+        
+        print("############################################")
+        print("       Your Purchased Ticket Combos:        ")
+        print("############################################")
+        print("")
+        for ticket in self.generated_tickets:
+            #test prints
+            #print("TEST PRINT", ticket)
+            #print("TEST PRINT 2", ticket[order_count])
+            #ticket_number = self.generated_tickets.index(ticket) + 1
+            ticket_number = self.generated_tickets.index(ticket) + 1
+            print(f"                 Ticket # {ticket_number}:")
+            print("")
+            print(f"White Balls: {ticket[:5]}")
+            print(f"PowerBall: {ticket[5]}")
+            print("")
+            print("############################################")
+            print("")
+
+        print("                 GOOD LUCK                  ")
+        #test prints
+        #print("self.generated_tickets", self.generated_tickets)
+        return self.generated_tickets         
         
         
+        
+    def checkwinnings(self):
+        """
+        Simulates the calculation of winnings from purchased tickets after drawing takes place.
+        """
+        generated_tickets = self.generated_tickets
+        winning_combo = self.winning_combo
+        winnings = 0
+        #Prizes List: [Number of Matching White Balls, Number of Matching Power Ball, prize] 
+        prizes= {
+            #(5,1): "Grand Prize", will check for grand prize earning seperately 
+            (5,0): 1000000,
+            (4,1): 50000,
+            (4,0): 100,
+            (3,1): 100,
+            (3,0): 7,
+            (2,1): 7,
+            (1,1): 4,
+            (0,1): 4,
+        }
+        
+        #print tests
+        #for ticket in generated_tickets:
+        #    print("WHITES", ticket[:5])
+        #print("WINNING COMBO WHITES", winning_combo[:5])
+        # for ticket in generated_tickets:
+        #     print("POWERBALL", ticket[5])
+        # print("WINNING POWERBALL", winning_combo[5])
+        print("############################################")
+        print("       Checking for winners!                ")
+        print("############################################")
+        
+        #TODO: sort ticket[:5] and winning_combo[:5] first to optimize search?
+        #checking for winning balls ticket by ticket
+        winning_ball_totals = [0,0] #winning_ball_totals[0] - matching white balls, winning_ball_totals[1] - matching powerball
+        for ticket in generated_tickets:
+            #checking for whiteball matches
+            print(f"CHECKING TICKET #{generated_tickets.index(ticket)+1}:")
+            for whiteball in ticket[:5]:
+                if whiteball in winning_combo[:5]:
+                    winning_ball_totals[0] += 1
+            #checking for powerball match
+            if ticket[5] == winning_combo[5]:
+                winning_ball_totals[1] += 1
+                
+            #check for grand prize winner
+            if winning_ball_totals[0] == 5 and winning_ball_totals[1] == 1:
+                print("YOU WON THE GRAND PRIZE!!!")
+                return "YOU WON THE GRAND PRIZE!"
+            
+            #check for other prize winnings and incrementing winnings
+            elif tuple(winning_ball_totals) in prizes.keys():
+                print(f"You matched {winning_ball_totals[0]} white balls and {winning_ball_totals[1]} powerballs.")
+                print(f"Congratulations, adding ${prizes[tuple(winning_ball_totals)]} to prize winnings.")
+                winnings += prizes[tuple(winning_ball_totals)]
+            
+            else:
+                print("Sorry, this ticket is not a winner.")
+            
+            #reset totals for next ticket
+            winning_ball_totals = [0,0]
+            
+            
+        print("############################################")
+        print("              YOUR WINNINGS:                ")
+        print("############################################")
+        #resetting generated_tickets and winning_combo to empty lists
+        self.generated_tickets = []
+        self.winning_combo = []
+        if winnings > 0:
+            print(f"You paid ${self.ticket_cost * self.ticket_quantity} for {self.ticket_quantity} tickets.")
+            print(f"Congratulations! You have won ${winnings}!")
+            print(f"Your net earnings are: ${winnings - (self.ticket_cost * self.ticket_quantity)}")
+        else:
+            print(f"Sorry, you don't have any winning tickets, and you lost ${self.ticket_cost * self.ticket_quantity}. Better luck next time!")
+        return winnings
+        
+        
+        
+
         
         
 
@@ -190,12 +287,14 @@ class RealPB:
 """
 TEST CODE
 """
+#REAL POWERBALL TEST CODE
 # p1 = RealPB()  # create an instance of the RealPB class
 # p1.previous_pb_stats()  # call the previous_pb_stats method
 # p1.future_pb() # call the future_pb method
 
+#LOTTO SIMULATION TEST CODE
 p1 = LottoSimulation() # create an instance of the LottoSimulation class
 p1.purchase_tickets() #b calls the purchase_tickets() method
-p1.playthelotto() # calls the playthelotto(), simulating the play
-print(p1.ticket_cost) # checks the assigned ticket_cost 
-print(p1.ticket_quantity) # checks the assigned ticket_quantity
+p1.generatetickets() #calls the generatetickets method which generates random tickets
+p1.playthelotto() # calls the playthelotto() method, simulating the play
+p1.checkwinnings() #calls the checkwinnings() method, simulating checking potential winnings
