@@ -1,2 +1,7 @@
 venv/
 api.py
+__pycache__/
+Lottery/db.sqlite3
+Lottery/Lottery/__pycache__/
+Lottery/powerball/__pycache__/
+Lottery/powerball/migrations/
