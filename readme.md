@@ -34,4 +34,4 @@ For security, the API key used to call the API has been obscured. An API key can
 <img src="https://github.com/jenniferKaiser21/Lottery_Project/blob/81d16621b90a0034d4d218bb1d2fca90b2b07a08/images/API_call_example.jpeg">
 
 # Demo of Working Code
-<iframe width="560" height="315" src="https://www.youtube.com/embed/wa4l8M7wV8U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<a href="https://www.youtube.com/embed/wa4l8M7wV8U">https://www.youtube.com/embed/wa4l8M7wV8U</a>
