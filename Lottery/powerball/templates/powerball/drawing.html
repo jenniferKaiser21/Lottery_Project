@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Powerball Drawing</title>
+    <!-- THE BACKGROUND IMAGE CURRENTLY DOESN'T WORK line 13 -->
+    <style>
+        li {
+
+            background-image: url("{% static '/images/whiteBall.png' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding-left: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Powerball Drawing</h1>
+    <p>Here are the winning numbers for the latest Powerball drawing:</p>
+    <ul>
+        <li>Number 1: [INSERT WINNING NUMBER 1]</li>
+        <li>Number 2: [INSERT WINNING NUMBER 2]</li>
+        <li>Number 3: [INSERT WINNING NUMBER 3]</li>
+        <li>Number 4: [INSERT WINNING NUMBER 4]</li>
+        <li>Number 5: [INSERT WINNING NUMBER 5]</li>
+        <!-- THE BACKGROUND IMAGE CURRENTLY DOESN'T WORK LINE 31-->
+        <li style="background-image: url('{% static '/images/redBall.png' %}')">
+            Powerball: [INSERT POWERBALL NUMBER]</li>
+    </ul>
+    <p>Good luck to all players!</p>
+</body>
+
+</html>
