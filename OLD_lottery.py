@@ -116,7 +116,7 @@ class LottoSimulation:
         winnings = 0
         #Prizes List: [Number of Matching White Balls, Number of Matching Power Ball, prize] 
         prizes= {
-            #(5,1): "Grand Prize", will check for grand prize earning seperately 
+            #(5,1): "Grand Prize", will check for grand prize earning separately 
             (5,0): 1000000,
             (4,1): 50000,
             (4,0): 100,

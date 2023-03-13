@@ -1,0 +1,20 @@
+{
+    "success": true,
+    "result": {
+        "numbers": {
+            "n1": "26",
+            "n2": "27",
+            "n3": "43",
+            "n4": "61",
+            "n5": "69",
+            "pb": "4"
+        },
+        "powerplay": "x3",
+        "date": "Wednesday, Mar 08, 2023",
+        "jackpot": "$31 Million",
+        "next-jackpot": {
+            "amount": "$45 Million",
+            "date": "Tomorrow, Mar 11, 2023"
+        }
+    }
+}

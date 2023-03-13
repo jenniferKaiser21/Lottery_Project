@@ -59,22 +59,43 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            height: 100vh;
+            width: 100vh;
+            overflow-y: scroll;
         }
     </style>
-    <title>Powerball Drawing</title>
+    <title>My Tickets</title>
+</head>
+
+<body>
 
     <div class="drawing-container">
         <div class="title">
-            <h1>WINNING POWERBALL DRAWING</h1>
+            <h1>Winning Drawing</h1>
         </div>
         <div class="drawing-row">
-            {% for number in first_five_numbers %}
+            {% for number in winning_first_five_numbers %}
             <div class="ball" id="ball{{ number }}">{{ number }}</div>
             {% endfor %}
-            <div class="powerball">{{ powerball }}</div>
+            <div class="powerball">{{ winning_powerball }}</div>
         </div>
     </div>
 
-</head>
+
+    <div class="drawing-container">
+        <div class="title">
+            <h1>My Tickets</h1>
+        </div>
+        {% for ticket_container in ticket_containers %}
+        <div class="drawing-row">
+            {% for number in ticket_container.first_five_numbers %}
+            <div class="ball" id="ball{{ number }}">{{ number }}</div>
+            {% endfor %}
+            <div class="powerball">{{ ticket_container.powerball }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
 
 </html>

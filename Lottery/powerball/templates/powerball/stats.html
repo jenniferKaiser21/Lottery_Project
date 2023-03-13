@@ -61,19 +61,24 @@
             align-items: center;
         }
     </style>
-    <title>Powerball Drawing</title>
+    <title>Drawing Stats</title>
 
     <div class="drawing-container">
         <div class="title">
-            <h1>WINNING POWERBALL DRAWING</h1>
+            <h1>Previous Powerball Drawing</h1>
         </div>
         <div class="drawing-row">
-            {% for number in first_five_numbers %}
+            {% for number in previous_white_balls %}
             <div class="ball" id="ball{{ number }}">{{ number }}</div>
             {% endfor %}
-            <div class="powerball">{{ powerball }}</div>
+            <div class="powerball">{{ previous_pb }}</div>
         </div>
     </div>
+
+    <!-- <div class="drawing-container">
+
+
+    </div> -->
 
 </head>
 
