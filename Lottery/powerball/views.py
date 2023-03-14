@@ -19,27 +19,44 @@ def drawing(request):
     return render(request, "powerball/drawing.html", context)
 
 def tickets(request):
-    purchase_instance = LottoSimulation()
-    purchase_instance.purchase_tickets()
-    generated_tickets = purchase_instance.generated_tickets
+    # purchase_instance = LottoSimulation()
+    # purchase_instance.purchase_tickets()
+    # generated_tickets = purchase_instance.generated_tickets
     
+    #SIMULATION DRIVER CODE
     lotto_sim = LottoSimulation()
+    lotto_sim.purchase_tickets()
+    lotto_sim.generatetickets()
     lotto_sim.playthelotto()
-    winning_combo = lotto_sim.winning_combo
-    winning_first_five_numbers = winning_combo[:5]
-    winning_powerball = winning_combo[5]
+    lotto_sim.checkwinnings()
     
+    generated_tickets = lotto_sim.generated_tickets
+    winning_combo = lotto_sim.winning_combo
+    winnings = lotto_sim.winnings
+    
+    #TEST PRINT
+    print("WINNING COMBO FROM VIEW", winning_combo)
+    #print(lotto_sim.winning_combo)
+    print("GENERATED_TICKETS FROM VIEW", generated_tickets)
+    #print(lotto_sim.generated_tickets)
+    print("WINNINGS FROM VIEW", winnings)
+    
+    
+    winning_first_five_numbers = lotto_sim.winning_combo[:5]
+    winning_powerball = lotto_sim.winning_combo[-1]
     ticket_containers = []
     
+    #winnings = lotto_sim.winnings
+
     for ticket in generated_tickets:
         first_five_numbers = ticket[:5]
         powerball = ticket[5]
         ticket_container = {'first_five_numbers': first_five_numbers, 'powerball': powerball}
         ticket_containers.append(ticket_container)
-        
-        context = {'ticket_containers': ticket_containers, 'winning_first_five_numbers': winning_first_five_numbers, "winning_powerball": winning_powerball}
-        
+        context = {'ticket_containers': ticket_containers, 'winning_first_five_numbers': winning_first_five_numbers, "winning_powerball": winning_powerball}    
     return render(request, "powerball/tickets.html", context)
+
+
 
 def stats(request):
     stats_instance = RealPB()
@@ -56,9 +73,14 @@ def stats(request):
         if k == "pb":
             previous_pb = int(v)
             
-    next_drawing_amt = data_dict['result']['next-jackpot']['amount']
-    net_drawing_date = data_dict['result']['next-jackpot']['date']
+    previous_drawing_date = data_dict['result']['date']
+    print("PREVIOUS DRAWING DATE", previous_drawing_date)
     
-    context = {"previous_white_balls":previous_white_balls, "previous_pb":previous_pb, "next_drawing_amt":next_drawing_amt, "net_drawing_date":net_drawing_date,}
+    previous_jackpot = data_dict['result']['jackpot']
+    print("PREVIOUS JACKPOT: ", previous_jackpot)
+    next_drawing_amt = data_dict['result']['next-jackpot']['amount']
+    next_drawing_date = data_dict['result']['next-jackpot']['date']
+    
+    context = {"previous_white_balls":previous_white_balls, "previous_pb":previous_pb, "next_drawing_amt":next_drawing_amt, "next_drawing_date":next_drawing_date, "previous_drawing_date":previous_drawing_date, "previous_jackpot":previous_jackpot,}
     return render(request, "powerball/stats.html", context)
     

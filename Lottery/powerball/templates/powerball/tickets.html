@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
     <style>
         body {
             background-color: #1c2d37;
@@ -18,7 +19,7 @@
             align-items: center;
             flex-direction: column;
             font-size: 48px;
-            margin-bottom: 20px;
+            margin-bottom: 0px;
             color: white;
         }
 
@@ -29,6 +30,19 @@
             background-color: #fff;
             margin: 5px;
             border: 1px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+        }
+
+        .winning-ball {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #fff;
+            margin: 5px;
+            border: 20px solid #00ff00;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -48,11 +62,25 @@
             font-size: 48px;
         }
 
+        .winning-powerball {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #ff0000;
+            margin: 5px;
+            border: 20px solid #00ff00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+        }
+
 
         .drawing-row {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            align-items: center;
+            margin-top: 0px;
         }
 
         .drawing-container {
@@ -68,6 +96,12 @@
 </head>
 
 <body>
+
+
+
+
+
+
 
     <div class="drawing-container">
         <div class="title">
@@ -88,13 +122,29 @@
         </div>
         {% for ticket_container in ticket_containers %}
         <div class="drawing-row">
-            {% for number in ticket_container.first_five_numbers %}
+            {% for number in ticket_container.first_five_numbers|slice:":5" %}
+            {% if number in winning_first_five_numbers %}
+            <!-- USE class winning-ball -->
+            <div class="winning-ball" id="ball{{ number }}">{{ number }}</div>
+            <!-- ELSE, USE class ball -->
+            {% else %}
             <div class="ball" id="ball{{ number }}">{{ number }}</div>
+            {% endif %}
             {% endfor %}
+
+            {% if ticket_container.powerball == winning_powerball %}
+            <!-- USE class winning-powerball -->
+            <div class="winning-powerball">{{ ticket_container.powerball }}</div>
+            <!-- ELSE, USE class powerball -->
+            {% else %}
             <div class="powerball">{{ ticket_container.powerball }}</div>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
+
+
+
 </body>
 
 
