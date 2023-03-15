@@ -1,0 +1,239 @@
+<html>
+
+<head>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
+    <style>
+        body {
+            background-color: #1c2d37;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+
+        h2 {
+            font-size: 24px;
+            color: white;
+        }
+
+
+        .main-window {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 48px;
+            margin-bottom: 0px;
+            color: white;
+        }
+
+        .ball {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #fff;
+            margin: 5px;
+            border: 1px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+        }
+
+        .winning-ball {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #fff;
+            margin: 5px;
+            border: 20px solid #00ff00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+        }
+
+        .powerball {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #ff0000;
+            margin: 5px;
+            border: 1px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+        }
+
+        .winning-powerball {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #ff0000;
+            margin: 5px;
+            border: 20px solid #00ff00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+        }
+
+
+        .drawing-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0px;
+
+        }
+
+        .drawing-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            width: 75vw;
+            overflow-y: scroll;
+        }
+
+        .box,
+        h2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: flex;
+            height: flex;
+            border: 5px solid #ff0000;
+            background-color: white;
+            margin: 50px;
+            padding: 20px;
+            margin-top: 0px;
+            color: #000;
+
+
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100vw;
+            height: 100vh;
+            padding: 0 50px;
+        }
+
+        .left {
+            float: left;
+            width: 40%;
+        }
+
+        .right {
+            float: right;
+            width: 60%;
+        }
+
+        .padtop {
+            padding-top: 30px;
+        }
+
+        .padbottom {
+            padding-bottom: 100px;
+        }
+
+        .dark {
+            color: black;
+        }
+    </style>
+    <title>-- Drawing Results --</title>
+</head>
+
+<body>
+
+
+
+
+
+    <div class="container">
+
+        <div class="drawing-container left">
+            <div class="title">
+                <h1>Winning Drawing</h1>
+            </div>
+            <div class="drawing-row padbottom">
+                {% for number in winning_first_five_numbers %}
+                <div class="ball" id="ball{{ number }}">{{ number }}</div>
+                {% endfor %}
+                <div class="powerball">{{ winning_powerball }}</div>
+            </div>
+
+
+
+            <div class="box padtop">
+                <h1>RESULTS:</h1>
+                <h2>Total spent on tickets: ${{ money_spent }}</h2>
+                <h2>Gross winnings: ${{ winnings }}</h2>
+                <div class="h1 dark box">
+                    <h1>Net earnings: ${{ net_earnings }}</h1>
+                </div>
+                <h1><a href="{% url 'purchase' %}">Click here to play again!</a></h1>
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <div class="drawing-container right">
+            <div class="title">
+                <h1>My Tickets</h1>
+            </div>
+
+            {% for ticket_container in ticket_containers %}
+            <div class="drawing-row">
+                {% for number in ticket_container.first_five_numbers|slice:":5" %}
+                {% if number in winning_first_five_numbers %}
+                <!-- USE class winning-ball -->
+                <div class="winning-ball" id="ball{{ number }}">{{ number }}</div>
+                <!-- ELSE, USE class ball -->
+                {% else %}
+                <div class="ball" id="ball{{ number }}">{{ number }}</div>
+                {% endif %}
+                {% endfor %}
+
+                {% if ticket_container.powerball == winning_powerball %}
+                <!-- USE class winning-powerball -->
+                <div class="winning-powerball">{{ ticket_container.powerball }}</div>
+                <!-- ELSE, USE class powerball -->
+                {% else %}
+                <div class="powerball">{{ ticket_container.powerball }}</div>
+                {% endif %}
+                <!-- PRINTS TICKET OUTCOME  -->
+                <h2>{{ ticket_container.ticket_outcome }}</h2>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+
+
+</body>
+
+
+</html>

@@ -1,13 +1,61 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-    <h1>Powerball | Home</h1>
+    <title>Welcome to Powerball!</title>
+    <style>
+        body {
+            background-color: #1c2d37;
+        }
+
+        /* CSS for the top container */
+        #header h1 {
+            text-align: center;
+            padding: 50px 0;
+            background-color: #1c2d37;
+            font-size: 100px;
+            color: white;
+
+        }
+
+        /* CSS for the left and right boxes */
+        .box {
+            display: inline-block;
+            width: 45%;
+            padding: 20px;
+            margin: 0 5px;
+            background-color: #687176;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        /* CSS for the links inside the boxes */
+        .box a {
+            display: block;
+            margin-top: 20px;
+            color: #ffffff;
+            font-size: 38px;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Powerball HOME </h1>
-    <a href="previous_results.html">Click here to view results from most recent drawing.</a>
-    <a href="future_drawing.html">Click here for information about the next drawing!</a>
+    <div id="header">
+        <h1>Welcome to Powerball!</h1>
+        <div class="box">
+            <h1>Powerball Simulation</h1>
+            <h2>This program simulates the purchasing of tickets, random "quick-pick" ticket generation, winning
+                drawing, and prize calculation.</h2>
+            <a href="{% url 'purchase' %}">Click here to play!</a>
+        </div>
+        <div class="box">
+            <h1>Recent Powerball Stats</h1>
+            <h2>This program calls an API and parses the JSON data for the most recent Powerball results, and displays
+                the future powerball drawing information.</h2>
+            <a href="{% url 'stats' %}">Click here to view!</a>
+        </div>
+    </div>
 </body>
 
 </html>

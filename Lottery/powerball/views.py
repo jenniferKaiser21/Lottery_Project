@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import sys
 # sys.path.append('Lottery_Project/lottery.py')
 # from lottery import LottoSimulation
@@ -18,14 +18,14 @@ def drawing(request):
     context = {'first_five_numbers': first_five_numbers, "powerball": powerball}
     return render(request, "powerball/drawing.html", context)
 
-def tickets(request):
+def tickets(request, lotto_sim):
     # purchase_instance = LottoSimulation()
     # purchase_instance.purchase_tickets()
     # generated_tickets = purchase_instance.generated_tickets
     
     #SIMULATION DRIVER CODE
-    lotto_sim = LottoSimulation()
-    lotto_sim.purchase_tickets()
+    #lotto_sim = LottoSimulation()
+    #lotto_sim.purchase_tickets()
     lotto_sim.generatetickets()
     lotto_sim.playthelotto()
     lotto_sim.checkwinnings()
@@ -33,6 +33,8 @@ def tickets(request):
     generated_tickets = lotto_sim.generated_tickets
     winning_combo = lotto_sim.winning_combo
     winnings = lotto_sim.winnings
+    money_spent = (lotto_sim.ticket_cost * lotto_sim.ticket_quantity)
+    net_earnings = winnings - money_spent
     
     #TEST PRINT
     print("WINNING COMBO FROM VIEW", winning_combo)
@@ -44,6 +46,7 @@ def tickets(request):
     
     winning_first_five_numbers = lotto_sim.winning_combo[:5]
     winning_powerball = lotto_sim.winning_combo[-1]
+    
     ticket_containers = []
     
     #winnings = lotto_sim.winnings
@@ -51,10 +54,32 @@ def tickets(request):
     for ticket in generated_tickets:
         first_five_numbers = ticket[:5]
         powerball = ticket[5]
-        ticket_container = {'first_five_numbers': first_five_numbers, 'powerball': powerball}
+        ticket_outcome = ticket[-1]
+        ticket_container = {'first_five_numbers': first_five_numbers, 'powerball': powerball, 'ticket_outcome': ticket_outcome}
         ticket_containers.append(ticket_container)
-        context = {'ticket_containers': ticket_containers, 'winning_first_five_numbers': winning_first_five_numbers, "winning_powerball": winning_powerball}    
-    return render(request, "powerball/tickets.html", context)
+        context = {'money_spent': money_spent, 'net_earnings':net_earnings, 'winnings': winnings, 'ticket_containers': ticket_containers, 'winning_first_five_numbers': winning_first_five_numbers, "winning_powerball": winning_powerball}    
+#    return render(request, "powerball/tickets.html", context)
+    return render(request, "powerball/tickets_new.html", context)
+
+
+
+def purchase(request):
+    if request.method =='POST':
+        ticket_quantity = int(request.POST.get('ticket_quantity'))
+        #money_received = int(request.POST.get('money_received'))
+        print("TICKET_QUANTITY IN VIEW", ticket_quantity)
+        lotto_sim = LottoSimulation()
+        lotto_sim.purchase_tickets(ticket_quantity)
+        ticket_cost = lotto_sim.ticket_cost
+        
+        
+        message = f"You have purchased {ticket_quantity} tickets for ${ticket_quantity * ticket_cost}. Good luck!"
+
+        return tickets(request, lotto_sim)
+        #return render(request, 'powerball/purchase.html', {"message": message})
+    return render(request, "powerball/purchase.html")
+
+
 
 
 

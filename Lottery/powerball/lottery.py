@@ -19,33 +19,29 @@ class LottoSimulation:
         self.generated_tickets = generated_tickets
         self.winning_combo = winning_combo
         
-    def purchase_tickets(self):
+    def purchase_tickets(self, ticket_quantity):
         """
         Simulates the ticket purchasing process.
         """
         self.ticket_cost = 2
-        self.ticket_quantity = int(input(f"Welcome to Powerball! Each quick pick costs ${self.ticket_cost}. \nHow many tickets would you like to purchase?  "))
+        self.ticket_quantity = ticket_quantity
         
-        print(f"That will cost ${self.ticket_quantity * self.ticket_cost}. Please type how much cash you would like to give, we can make change (dollars only, no coins).  ")
-        money_received = int(input("$ "))
+        message = ""
+        # money_received = 0
+        # while money_received < self.ticket_quantity * self.ticket_cost:
+        #     if money_received > 0:
+        #         message = "Sorry, you don't have enough money. Please try again."
+        #     message += f"That will cost ${self.ticket_quantity * self.ticket_cost} Please type how much cash you would like to give, we can make change (dollars only, no coins). "
+        #     #money_received = int(input("$ "))
         
-        while money_received < self.ticket_quantity * self.ticket_cost:
-            print(f"Sorry, you don't have enough money. How many tickets would you like to buy? ")
-            self.ticket_quantity = int(input())
-            print(f"That will cost ${self.ticket_quantity * self.ticket_cost}. Please type how much cash you would like to give, we can make change (dollars only, no coins).")
-            money_received = int(input("$ "))
-        
-        if money_received > self.ticket_quantity * self.ticket_cost:
-            print(f"Here is your change. ${money_received - (self.ticket_quantity * self.ticket_cost)}. Best of luck!")
-        
-        elif money_received == self.ticket_quantity * self.ticket_cost:
-            print(f"Thank you. Good luck!")
-        
-        #ADDED AS A TEST
-        #self.generatetickets()
-        #self.playthelotto()
-        
-        return self.ticket_quantity, self.ticket_cost
+        # if money_received > self.ticket_quantity * self.ticket_cost:
+        #     message += f"Here is your change. ${money_received - (self.ticket_quantity * self.ticket_cost)}. Best of luck!"    
+        # elif money_received == self.ticket_quantity * self.ticket_cost:
+        #     message += f"Thank you. Good luck!"
+            
+        return message
+        #OLD LOGIC   
+        #return self.ticket_quantity, self.ticket_cost
     
     
     def generatetickets(self):
@@ -162,9 +158,11 @@ class LottoSimulation:
             
             #checking for winning balls ticket by ticket
             winning_ball_totals = [0,0] #winning_ball_totals[0] - matching white balls, winning_ball_totals[1] - matching powerball
+            ticket_outcome = ""
             for ticket in self.generated_tickets:
+                
                 #checking for whiteball matches
-                print(f"CHECKING TICKET #{self.generated_tickets.index(ticket)+1}:")
+                #print(f"CHECKING TICKET #{self.generated_tickets.index(ticket)+1}:")
                 for whiteball in ticket[:5]:
                     if whiteball in winning_combo[:5]:
                         winning_ball_totals[0] += 1
@@ -175,19 +173,23 @@ class LottoSimulation:
                 #check for grand prize winner
                 if winning_ball_totals[0] == 5 and winning_ball_totals[1] == 1:
                     print("YOU WON THE GRAND PRIZE!!!")
+                    #TODO: CREATE SPECIAL REDIRECT PAGE FOR GRAND PRIZE
                     return "YOU WON THE GRAND PRIZE!"
                 
                 #check for other prize winnings and incrementing winnings
                 elif tuple(winning_ball_totals) in prizes.keys():
-                    print(f"You matched {winning_ball_totals[0]} white balls and {winning_ball_totals[1]} powerballs.")
-                    print(f"Congratulations, adding ${prizes[tuple(winning_ball_totals)]} to prize winnings.")
+                    ticket_outcome += f"You matched {winning_ball_totals[0]} white balls and {winning_ball_totals[1]} powerballs. "
+                    ticket_outcome += f"You won ${prizes[tuple(winning_ball_totals)]}!"
                     winnings += prizes[tuple(winning_ball_totals)]
                 
                 else:
-                    print("Sorry, this ticket is not a winner.")
-                
-                #reset totals for next ticket
+                    ticket_outcome += "Sorry, this ticket is not a winner."
+                    
+                ticket.append(ticket_outcome)
+                print("TICKET IN LOTTERY.PY", ticket)
+                #reset totals, ticket_outcome for next ticket
                 winning_ball_totals = [0,0]
+                ticket_outcome = ""
                 
                 
             print("############################################")

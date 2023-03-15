@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
+    <style>
+        body {
+            background-color: #1c2d37;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 48px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 24px;
+            color: white;
+
+        }
+    </style>
+    <title>Purchase Tickets</title>
+</head>
+
+<body>
+
+    <div class="title">
+        <h1>LET'S PLAY THE POWERBALL LOTTERY!</h1>
+    </div>
+    <div class="container">
+        <form action="{% url 'purchase' %}" method="post">
+            {% csrf_token %}
+            <label for="ticket_quantity">
+                <h2>How many tickets would you like to purchase?</h2>
+            </label>
+            <input id="ticket_quantity" type="number" name="ticket_quantity" required>
+            <button type="submit">Purchase</button>
+        </form>
+
+    </div>
+
+
+</body>
+
+
+</html>
