@@ -50,6 +50,7 @@
             justify-content: center;
             align-items: center;
             font-size: 48px;
+            box-shadow: inset 0 0 15px 10px rgba(0, 0, 0, 0.3);
         }
 
         .winning-ball {
@@ -63,6 +64,7 @@
             justify-content: center;
             align-items: center;
             font-size: 48px;
+            box-shadow: inset 0 0 15px 10px rgba(0, 0, 0, 0.3);
         }
 
         .powerball {
@@ -76,6 +78,7 @@
             justify-content: center;
             align-items: center;
             font-size: 48px;
+            box-shadow: inset 0 0 15px 10px rgba(0, 0, 0, 0.3);
         }
 
         .winning-powerball {
@@ -89,6 +92,7 @@
             justify-content: center;
             align-items: center;
             font-size: 48px;
+            box-shadow: inset 0 0 15px 10px rgba(0, 0, 0, 0.3);
         }
 
 
@@ -109,6 +113,14 @@
             overflow-y: scroll;
         }
 
+        .drawing-row-winner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0px;
+            border: 20px solid #00ff00;
+        }
+
         .box,
         h2 {
             display: flex;
@@ -125,6 +137,24 @@
             color: #000;
 
 
+        }
+
+        .textbox,
+        h2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: flex;
+            border: 5px solid #ff0000;
+            background-color: white;
+            margin: 50px;
+            padding: 20px;
+            margin-top: 0px;
+            color: #000;
+            word-wrap: break-word;
+            align-self: center;
         }
 
         .container {
@@ -206,6 +236,7 @@
             </div>
 
             {% for ticket_container in ticket_containers %}
+            {% if ticket_container.ticket_outcome == 'Sorry, this ticket is not a winner.'%}
             <div class="drawing-row">
                 {% for number in ticket_container.first_five_numbers|slice:":5" %}
                 {% if number in winning_first_five_numbers %}
@@ -224,9 +255,36 @@
                 {% else %}
                 <div class="powerball">{{ ticket_container.powerball }}</div>
                 {% endif %}
-                <!-- PRINTS TICKET OUTCOME  -->
-                <h2>{{ ticket_container.ticket_outcome }}</h2>
+                <div class="text-box">
+                    <!-- PRINTS TICKET OUTCOME  -->
+                    <h2>{{ ticket_container.ticket_outcome }}</h2>
+                </div>
             </div>
+            {% else %}
+            <div class="drawing-row-winner">
+                {% for number in ticket_container.first_five_numbers|slice:":5" %}
+                {% if number in winning_first_five_numbers %}
+                <!-- USE class winning-ball -->
+                <div class="winning-ball" id="ball{{ number }}">{{ number }}</div>
+                <!-- ELSE, USE class ball -->
+                {% else %}
+                <div class="ball" id="ball{{ number }}">{{ number }}</div>
+                {% endif %}
+                {% endfor %}
+
+                {% if ticket_container.powerball == winning_powerball %}
+                <!-- USE class winning-powerball -->
+                <div class="winning-powerball">{{ ticket_container.powerball }}</div>
+                <!-- ELSE, USE class powerball -->
+                {% else %}
+                <div class="powerball">{{ ticket_container.powerball }}</div>
+                {% endif %}
+                <div class="text-box">
+                    <!-- PRINTS TICKET OUTCOME  -->
+                    <h2>{{ ticket_container.ticket_outcome }}</h2>
+                </div>
+            </div>
+            {% endif %}
 
             {% endfor %}
         </div>

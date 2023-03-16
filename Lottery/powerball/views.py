@@ -7,7 +7,30 @@ from .lottery import LottoSimulation, RealPB
 
 # Create your views here.
 def home(request):
-    return render(request, "powerball/home.html")
+    stats_instance = RealPB()
+    stats_instance.read_api_results()
+    data_dict = stats_instance.data_dict
+    #print("THIS IS IN STATS VIEW", data_dict)
+    previous_white_balls = []
+    for k,v in data_dict['result']['numbers'].items():
+        if k != "pb":
+            previous_white_balls.append(int(v))
+
+    previous_pb = 0
+    for k, v in data_dict['result']['numbers'].items():
+        if k == "pb":
+            previous_pb = int(v)
+            
+    previous_drawing_date = data_dict['result']['date']
+    #print("PREVIOUS DRAWING DATE", previous_drawing_date)
+    
+    previous_jackpot = data_dict['result']['jackpot']
+    #print("PREVIOUS JACKPOT: ", previous_jackpot)
+    next_drawing_amt = data_dict['result']['next-jackpot']['amount']
+    next_drawing_date = data_dict['result']['next-jackpot']['date']
+    
+    context = {"previous_white_balls":previous_white_balls, "previous_pb":previous_pb, "next_drawing_amt":next_drawing_amt, "next_drawing_date":next_drawing_date, "previous_drawing_date":previous_drawing_date, "previous_jackpot":previous_jackpot,}
+    return render(request, "powerball/home.html", context)
 
 def drawing(request):
     lotto_sim = LottoSimulation()

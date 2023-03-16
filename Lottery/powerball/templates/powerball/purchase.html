@@ -9,7 +9,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+
             margin: 0;
         }
 
@@ -32,22 +32,75 @@
             color: white;
 
         }
+
+
+        /* CSS for the top container */
+        #header h1 {
+            text-align: center;
+            padding: 50px 0;
+            background-color: #1c2d37;
+            font-size: 100px;
+            color: white;
+
+        }
+
+        #header h2 {
+            text-align: center;
+            color: white;
+            font-size: 30px;
+
+        }
+
+        #ticket_quantity {
+            font-size: 24px;
+            padding: 10px;
+        }
+
+        button[type="submit"] {
+            font-size: 24px;
+            padding: 10px 20px;
+        }
+
+        /* CSS for the left and right boxes */
+        .box {
+            display: inline-block;
+            width: 45%;
+            padding: 20px;
+            margin: 0 5px;
+            background-color: #687176;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(255, 0, 0, 0.3);
+
+        }
+
+        /* CSS for the links inside the boxes */
+        .box a {
+            display: block;
+            margin-top: 20px;
+            color: #ffffff;
+            font-size: 38px;
+            text-decoration: underline;
+            box-shadow: 0 2px 6px rgba(255, 0, 0, 0.3);
+
+        }
     </style>
     <title>Purchase Tickets</title>
 </head>
 
 <body>
 
-    <div class="title">
-        <h1>LET'S PLAY THE POWERBALL LOTTERY!</h1>
+    <div id="header">
+        <h1>Buy Powerball Tickets!</h1>
     </div>
-    <div class="container">
+    <div class="box" id="header">
         <form action="{% url 'purchase' %}" method="post">
             {% csrf_token %}
             <label for="ticket_quantity">
                 <h2>How many tickets would you like to purchase?</h2>
+                <h2>Each ticket costs $2.</h2>
             </label>
-            <input id="ticket_quantity" type="number" name="ticket_quantity" required>
+            <input id="ticket_quantity" type="number" name="ticket_quantity" value="100" required>
             <button type="submit">Purchase</button>
         </form>
 
