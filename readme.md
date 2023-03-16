@@ -48,7 +48,7 @@ Upon clicking Purchase, the user is then directed to a page that has the simulat
 
 <img src="https://github.com/jenniferKaiser21/Lottery_Project/blob/60b7a80c80495c4de15efbb0056b9287211a4601/screenshots/drawing.png">
 
-The user has the option to view Recent Powerball Stats, which uses information parsed from a JSON file, originally fetched from on API (see additional notes regarding API).
+The user has the option to view Recent Powerball Stats, which uses information parsed from a JSON file, originally fetched from the <a href="https://collectapi.com/api/chancegame/">Lottery API</a> (see additional notes regarding API).
 
 <img src="https://github.com/jenniferKaiser21/Lottery_Project/blob/60b7a80c80495c4de15efbb0056b9287211a4601/screenshots/stats.png">
 
