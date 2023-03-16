@@ -27,21 +27,8 @@ class LottoSimulation:
         self.ticket_quantity = ticket_quantity
         
         message = ""
-        # money_received = 0
-        # while money_received < self.ticket_quantity * self.ticket_cost:
-        #     if money_received > 0:
-        #         message = "Sorry, you don't have enough money. Please try again."
-        #     message += f"That will cost ${self.ticket_quantity * self.ticket_cost} Please type how much cash you would like to give, we can make change (dollars only, no coins). "
-        #     #money_received = int(input("$ "))
-        
-        # if money_received > self.ticket_quantity * self.ticket_cost:
-        #     message += f"Here is your change. ${money_received - (self.ticket_quantity * self.ticket_cost)}. Best of luck!"    
-        # elif money_received == self.ticket_quantity * self.ticket_cost:
-        #     message += f"Thank you. Good luck!"
-            
         return message
-        #OLD LOGIC   
-        #return self.ticket_quantity, self.ticket_cost
+
     
     
     def generatetickets(self):
@@ -86,8 +73,7 @@ class LottoSimulation:
         #test prints
         #print("self.generated_tickets", self.generated_tickets)
         
-        #DRIVER CODE
-        #self.playthelotto()
+
         #TEST PRINT
         print("SELF.GENERATED_TICKETS", self.generated_tickets)
         return self.generated_tickets   
@@ -118,8 +104,7 @@ class LottoSimulation:
         print(f"White Balls: {self.winning_combo[:5]}")
         print(f"Winning Power Ball: {self.winning_combo[5]}")
         
-        #DRIVER CODE
-        #self.checkwinnings()
+
         print("SELF.WINNING_COMBO", self.winning_combo)
         return self.winning_combo
         
@@ -195,9 +180,7 @@ class LottoSimulation:
             print("############################################")
             print("              YOUR WINNINGS:                ")
             print("############################################")
-            #resetting generated_tickets and winning_combo to empty lists
-            # self.generated_tickets = []
-            # self.winning_combo = []
+
             if winnings > 0:
                 print(f"You paid ${self.ticket_cost * self.ticket_quantity} for {self.ticket_quantity} tickets.")
                 print(f"Congratulations! You have won ${winnings}!")
@@ -208,121 +191,6 @@ class LottoSimulation:
             
             return self.winnings        
         
-        
-        
-    # def checkwinnings_django(self):
-    #     #TODO: REMOVE generated_tickets_to_dict ... do not need this anymore (logic is checked within tickets.html)
-    #     """
-    #     Simulates the calculation of winnings from purchased tickets after drawing takes place for DJANGO app
-    #     """
-    #     generated_tickets = self.generated_tickets
-    #     #TODO: ADDED AS TEST
-    #     generated_tickets_to_dict = self.generated_tickets_to_dict
-    #     winning_combo = self.winning_combo
-    #     winnings = self.winnings
-    #     #Prizes List: [Number of Matching White Balls, Number of Matching Power Ball, prize] 
-    #     prizes= {
-    #         #(5,1): "Grand Prize", will check for grand prize earning separately 
-    #         (5,0): 1000000,
-    #         (4,1): 50000,
-    #         (4,0): 100,
-    #         (3,1): 100,
-    #         (3,0): 7,
-    #         (2,1): 7,
-    #         (1,1): 4,
-    #         (0,1): 4,
-    #     }
-        
-    #     #TEST PRINT
-    #     print("generated_tickets",generated_tickets)
-        
-    #     """
-    #     generated_tickets is a list of lists: generated_tickets [[11, 19, 21, 63, 67, 26], [14, 22, 49, 59, 62, 15]]
-        
-    #     Generated tickets list is converted to ordered dict and checked, bool is False by default:
-    #     generated_tickets_to_dict = [{11:True, 19:False, 21:False, 63:True, 67: False, 26: False},{14:False, 22:False, 49:False, 59:True, 62:False, 15:False}]
-    #     Each ticket is transformed into a dictionary where the number is the key, and the value is a bool depending on if it matches the winning_combo numbers
-
-    #     Keeps track per ticket of number of winning balls
-    #     winning_ball_totals = [0,0]     winning_ball_totals[0] is matching whiteballs, winning_ball_totals[1] is matching powerball
-        
-    #     Logic in tickets view will determine the color of the border around the ball of each number in each ticket
-        
-    #     #TODO: amount won per ticket and total transaction to the right in the tickets view
-    #     """
-
-        
-    #     print("############################################")
-    #     print("       Checking for winners!                ")
-    #     print("############################################")
-
-        
-    #     #checking for winning balls ticket by ticket in winning_combo
-    #     winning_ball_totals = [0,0] #winning_ball_totals[0] - matching white balls, winning_ball_totals[1] - matching powerball
-    #     generated_tickets_to_dict = []
-    #     for ticket in self.generated_tickets:
-    #         #creating dictionary with keys for each number in the ticket, default value is False
-    #         ticket_dict = collections.OrderedDict((number, False) for number in ticket)
-    #         #adding ticket dictionary to ticket_containers list
-    #         self.generated_tickets_to_dict.append(ticket_dict)
-    #     #test print
-    #     print("MODIFIED GENERATED_TICKETS", self.generated_tickets_to_dict)
-    #     print("WINNING COMBO", self.winning_combo)
-        
-    #     #LOOP THROUGH DICT TO FIND WHITEBALL MATCHES
-        
-    #     for i in range(0, 5):
-    #         for ticket in self.generated_tickets_to_dict:
-    #             #print("TICKET BEFORE MODIFICATIONS", ticket)
-    #             for whiteball, winnerbool in list(ticket.items())[:5]:
-    #                 if whiteball in self.winning_combo[:5]:
-    #                     ticket[whiteball] = True
-    #                     winning_ball_totals[0] += 1
-    #             #print("TICKET AFTER MODIFICATIONS", ticket)
-    #             t_powerball = list(ticket.items())[-1][0]
-    #             if t_powerball == self.winning_combo[-1]:
-    #                 ticket[t_powerball] = True
-    #                 winning_ball_totals[1] += 1
-                
-    #             #check for grand prize winner
-    #             if winning_ball_totals[0] == 5 and winning_ball_totals[1] == 1:
-    #                 print("YOU WON THE GRAND PRIZE!!!")
-    #                 return "YOU WON THE GRAND PRIZE!"
-                
-    #             #check for other prize winnings and incrementing winnings
-    #             elif tuple(winning_ball_totals) in prizes.keys():
-    #                 print(f"You matched {winning_ball_totals[0]} white balls and {winning_ball_totals[1]} powerballs.")
-    #                 print(f"Congratulations, adding ${prizes[tuple(winning_ball_totals)]} to prize winnings.")
-    #                 self.winnings += prizes[tuple(winning_ball_totals)]
-                
-    #             else:
-    #                 print("Sorry, this ticket is not a winner.")
-                
-    #             #reset totals for next ticket
-    #             winning_ball_totals = [0,0]
-    #     print("WINNING COMBO", self.winning_combo)
-    #     print("############################################")
-    #     print("              YOUR WINNINGS:                ")
-    #     print("############################################")
-    #     #resetting generated_tickets and winning_combo to empty lists
-    #     # self.generated_tickets = []
-    #     # self.winning_combo = []
-    #     if self.winnings > 0:
-    #         print(f"You paid ${self.ticket_cost * self.ticket_quantity} for {self.ticket_quantity} tickets.")
-    #         print(f"Congratulations! You have won ${self.winnings}!")
-    #         print(f"Your net earnings are: ${self.winnings - (self.ticket_cost * self.ticket_quantity)}")
-    #     else:
-    #         print(f"Sorry, you don't have any winning tickets, and you lost ${self.ticket_cost * self.ticket_quantity}. Better luck next time!")
-    #     return self.generated_tickets_to_dict, self.winnings
-        
-
-        
-        
-    
-        
-        
-        
-
         
         
 
@@ -383,9 +251,6 @@ class RealPB:
         #TEST PRINT STATEMENT
         #print(data_dict)
         self.data_dict = data_dict
-        #TESTING
-        #self.previous_pb_stats()
-        #self.future_pb()
         return self.data_dict
 
 
@@ -427,7 +292,6 @@ class RealPB:
         print("Next Jackpot amount: ", data_dict['result']['next-jackpot']['amount'])
         print("Next Drawing: ", data_dict['result']['next-jackpot']['date'])
             
-
 
 
 

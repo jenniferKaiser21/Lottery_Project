@@ -10,7 +10,6 @@ def home(request):
     stats_instance = RealPB()
     stats_instance.read_api_results()
     data_dict = stats_instance.data_dict
-    #print("THIS IS IN STATS VIEW", data_dict)
     previous_white_balls = []
     for k,v in data_dict['result']['numbers'].items():
         if k != "pb":
@@ -22,10 +21,7 @@ def home(request):
             previous_pb = int(v)
             
     previous_drawing_date = data_dict['result']['date']
-    #print("PREVIOUS DRAWING DATE", previous_drawing_date)
-    
     previous_jackpot = data_dict['result']['jackpot']
-    #print("PREVIOUS JACKPOT: ", previous_jackpot)
     next_drawing_amt = data_dict['result']['next-jackpot']['amount']
     next_drawing_date = data_dict['result']['next-jackpot']['date']
     
@@ -42,13 +38,7 @@ def drawing(request):
     return render(request, "powerball/drawing.html", context)
 
 def tickets(request, lotto_sim):
-    # purchase_instance = LottoSimulation()
-    # purchase_instance.purchase_tickets()
-    # generated_tickets = purchase_instance.generated_tickets
-    
     #SIMULATION DRIVER CODE
-    #lotto_sim = LottoSimulation()
-    #lotto_sim.purchase_tickets()
     lotto_sim.generatetickets()
     lotto_sim.playthelotto()
     lotto_sim.checkwinnings()
@@ -72,7 +62,6 @@ def tickets(request, lotto_sim):
     
     ticket_containers = []
     
-    #winnings = lotto_sim.winnings
 
     for ticket in generated_tickets:
         first_five_numbers = ticket[:5]
@@ -81,7 +70,6 @@ def tickets(request, lotto_sim):
         ticket_container = {'first_five_numbers': first_five_numbers, 'powerball': powerball, 'ticket_outcome': ticket_outcome}
         ticket_containers.append(ticket_container)
         context = {'money_spent': money_spent, 'net_earnings':net_earnings, 'winnings': winnings, 'ticket_containers': ticket_containers, 'winning_first_five_numbers': winning_first_five_numbers, "winning_powerball": winning_powerball}    
-#    return render(request, "powerball/tickets.html", context)
     return render(request, "powerball/tickets_new.html", context)
 
 
@@ -89,7 +77,7 @@ def tickets(request, lotto_sim):
 def purchase(request):
     if request.method =='POST':
         ticket_quantity = int(request.POST.get('ticket_quantity'))
-        #money_received = int(request.POST.get('money_received'))
+
         print("TICKET_QUANTITY IN VIEW", ticket_quantity)
         lotto_sim = LottoSimulation()
         lotto_sim.purchase_tickets(ticket_quantity)
@@ -99,7 +87,7 @@ def purchase(request):
         message = f"You have purchased {ticket_quantity} tickets for ${ticket_quantity * ticket_cost}. Good luck!"
 
         return tickets(request, lotto_sim)
-        #return render(request, 'powerball/purchase.html', {"message": message})
+
     return render(request, "powerball/purchase.html")
 
 
