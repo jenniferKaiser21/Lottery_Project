@@ -8,7 +8,7 @@
 <a href="www.github.com/jenniferkaiser21">www.github.com/jenniferkaiser21</a>
 
 # Demo of Working Code
-<a href="https://youtu.be/Y5tQHNiYaMo">https://youtu.be/Y5tQHNiYaMo/a>
+<a href="https://youtu.be/Y5tQHNiYaMo">https://youtu.be/Y5tQHNiYaMo</a>
 
  # Data Source(s):
 <img src="https://github.com/jenniferKaiser21/Lottery_Project/blob/e2c490be9ac10987f6daf616188e22a84ad390a7/images/powerball_chart.jpg">
