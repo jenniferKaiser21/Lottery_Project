@@ -1,11 +1,11 @@
 # Full-Stack Powerball Simulation Project
 <p>Jennifer Kaiser 2023 
 <p>
-<a href="http://www.jenniferkaiser.tech">www.jenniferkaiser.tech</a>
+<a href="https://www.jenniferkaiser.tech">www.jenniferkaiser.tech</a>
 <p>
-<a href="http://www.linkedin.com/in/jenniferkaiser-tech">www.linkedin.com/in/jenniferkaiser-tech</a>
+<a href="https://www.linkedin.com/in/jenniferkaiser-tech">www.linkedin.com/in/jenniferkaiser-tech</a>
 <p>
-<a href="http://www.github.com/jenniferkaiser21">www.github.com/jenniferkaiser21</a>
+<a href="https://www.github.com/jenniferkaiser21">www.github.com/jenniferkaiser21</a>
 
 # Demo of Working Code
 <a href="https://youtu.be/Y5tQHNiYaMo">https://youtu.be/Y5tQHNiYaMo</a>
